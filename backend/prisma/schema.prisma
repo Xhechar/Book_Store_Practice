@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  user_id String @id @unique @db.NVarChar(255)
+  name String @db.NVarChar(255)
+  phone Int @unique
+  email String @unique @db.NVarChar(255)
+  password String @db.NVarChar(255)
+  role String @default("user") @db.NVarChar(255)
+  isWelcomed Boolean @default(false)
+  isDeleted Boolean @default(false)
+  notebooks Book[]
+}
+
+model Book {
+  book_id String @id @unique @db.NVarChar(255)
+  title String @db.NVarChar(255)
+  user_id String @db.NVarChar(255)
+  content String @db.NVarChar(max)
+  createdAt DateTime @default(now())
+  user User @relation(fields: [user_id], references: [user_id])
+  favourites Favourite[]
+}
+
+model Favourite {
+  favourite_id String @id @unique @db.NVarChar(255)
+  user_id String @db.NVarChar(255)
+  book_id String @db.NVarChar(255)
+  createdAt DateTime @default(now())
+  notebooks Book @relation(fields: [book_id], references: [book_id])
+}
