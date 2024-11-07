@@ -18,6 +18,7 @@ model User {
   name String @db.NVarChar(255)
   phone Int @unique
   email String @unique @db.NVarChar(255)
+  profile_image String @db.NVarChar(255)
   password String @db.NVarChar(255)
   role String @default("user") @db.NVarChar(255)
   isWelcomed Boolean @default(false)
@@ -28,6 +29,7 @@ model User {
 model Book {
   book_id String @id @unique @db.NVarChar(255)
   title String @db.NVarChar(255)
+  book_image String @db.NVarChar(255)
   user_id String @db.NVarChar(255)
   content String @db.NVarChar(max)
   createdAt DateTime @default(now())

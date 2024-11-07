@@ -16,9 +16,7 @@ export class AuthController {
         });
       }
 
-      const result = await authAuthservice.loginUser(req.body);
-
-      return res.status(201).json(result);                                 
+      return res.status(201).json(await authAuthservice.loginUser(req.body));                                 
       
     } catch (error) {
       return res.status(501).json({
